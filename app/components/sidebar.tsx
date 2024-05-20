@@ -7,7 +7,6 @@ import SettingsIcon from "../icons/settings.svg";
 import GithubIcon from "../icons/github.svg";
 import ChatGptIcon from "../icons/chatgpt.svg";
 import AddIcon from "../icons/add.svg";
-import CloseIcon from "../icons/close.svg";
 import DeleteIcon from "../icons/delete.svg";
 import MaskIcon from "../icons/mask.svg";
 import PluginIcon from "../icons/plugin.svg";
@@ -15,7 +14,7 @@ import DragIcon from "../icons/drag.svg";
 
 import Locale from "../locales";
 
-import { useAppConfig, useChatStore } from "../store";
+import { useAppConfig, useChatStore, useUpdateStore } from "../store";
 
 import {
   DEFAULT_SIDEBAR_WIDTH,
@@ -142,7 +141,11 @@ export function SideBar(props: { className?: string }) {
   );
 
   useHotKey();
-
+  const updateStore = useUpdateStore();
+  const usage = {
+    used: updateStore.used,
+    subscription: updateStore.subscription,
+  };
   return (
     <div
       className={`${styles.sidebar} ${props.className} ${
@@ -157,8 +160,13 @@ export function SideBar(props: { className?: string }) {
         <div className={styles["sidebar-title"]} data-tauri-drag-region>
           NextChat
         </div>
+        <br />
         <div className={styles["sidebar-sub-title"]}>
-          Build your own AI assistant.
+          {Locale.Settings.Usage.Detail(
+            usage?.subscription ?? "[?]",
+            usage?.used ?? "[?]",
+            (usage?.subscription ?? 0) - (usage?.used ?? 0),
+          )}
         </div>
         <div className={styles["sidebar-logo"] + " no-dark"}>
           <ChatGptIcon />

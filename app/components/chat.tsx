@@ -49,6 +49,7 @@ import {
   useAppConfig,
   DEFAULT_TOPIC,
   ModelType,
+  useUpdateStore,
 } from "../store";
 
 import {
@@ -759,9 +760,17 @@ function _Chat() {
       }
     }
   };
-
+  const [, setLoadingUsage] = useState(false);
+  const updateStore = useUpdateStore();
+  function checkUsage(force = false) {
+    setLoadingUsage(true);
+    updateStore.updateUsage(force).finally(() => {
+      setLoadingUsage(false);
+    });
+  }
   const doSubmit = (userInput: string) => {
     if (userInput.trim() === "") return;
+    checkUsage(true);
     const matchCommand = chatCommands.match(userInput);
     if (matchCommand.matched) {
       setUserInput("");

@@ -265,6 +265,9 @@ const cn = {
       SubTitle(used: any, total: any) {
         return `本月已使用 $${used}，订阅总额 $${total}`;
       },
+      Detail(total: any, used: any, residual: any) {
+        return `总额度 $${total}，已使用 $${used}，剩余 $${residual}`;
+      },
       IsChecking: "正在检查…",
       Check: "重新检查",
       NoAccess: "输入 API Key 或访问密码查看余额",

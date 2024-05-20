@@ -269,6 +269,9 @@ const en: LocaleType = {
       SubTitle(used: any, total: any) {
         return `Used this month $${used}, subscription $${total}`;
       },
+      Detail(total: any, used: any, residual: any) {
+        return `subscription $${total}，Used this $${used}, Residual $${residual}`;
+      },
       IsChecking: "Checking...",
       Check: "Check",
       NoAccess: "Enter API Key to check balance",

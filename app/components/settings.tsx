@@ -783,7 +783,7 @@ export function Settings() {
             subTitle={Locale.Settings.FontSize.SubTitle}
           >
             <InputRange
-              title={`${config.fontSize ?? 14}px`}
+              title={`${config.fontSize ?? 16}px`}
               value={config.fontSize}
               min="12"
               max="40"

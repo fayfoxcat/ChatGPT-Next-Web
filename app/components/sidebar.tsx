@@ -163,9 +163,9 @@ export function SideBar(props: { className?: string }) {
         <br />
         <div className={styles["sidebar-sub-title"]}>
           {Locale.Settings.Usage.Detail(
-            usage?.subscription ?? "[?]",
-            usage?.used ?? "[?]",
-            (usage?.subscription ?? 0) - (usage?.used ?? 0),
+            (usage?.subscription ?? "[?]").toFixed(2),
+            (usage?.used ?? "[?]").toFixed(2),
+            ((usage?.subscription ?? 0) - (usage?.used ?? 0)).toFixed(2),
           )}
         </div>
         <div className={styles["sidebar-logo"] + " no-dark"}>

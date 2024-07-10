@@ -468,6 +468,14 @@ export function ChatActions(props: {
       return filteredModels;
     }
   }, [allModels]);
+  const currentModelName = useMemo(() => {
+    const model = models.find(
+      (m) =>
+        m.name == currentModel &&
+        m?.provider?.providerName == currentProviderName,
+    );
+    return model?.displayName ?? "";
+  }, [models, currentModel, currentProviderName]);
   const [showModelSelector, setShowModelSelector] = useState(false);
   const [showUploadImage, setShowUploadImage] = useState(false);
 
@@ -490,7 +498,11 @@ export function ChatActions(props: {
         session.mask.modelConfig.providerName = nextModel?.provider
           ?.providerName as ServiceProvider;
       });
-      showToast(nextModel.name);
+      showToast(
+        nextModel?.provider?.providerName == "ByteDance"
+          ? nextModel.displayName
+          : nextModel.name,
+      );
     }
   }, [chatStore, currentModel, models]);
 
@@ -572,7 +584,7 @@ export function ChatActions(props: {
 
       <ChatAction
         onClick={() => setShowModelSelector(true)}
-        text={currentModel}
+        text={currentModelName}
         icon={<RobotIcon />}
       />
 
@@ -597,7 +609,15 @@ export function ChatActions(props: {
                 providerName as ServiceProvider;
               session.mask.syncGlobalConfig = false;
             });
-            showToast(model);
+            if (providerName == "ByteDance") {
+              const selectedModel = models.find(
+                (m) =>
+                  m.name == model && m?.provider?.providerName == providerName,
+              );
+              showToast(selectedModel?.displayName ?? "");
+            } else {
+              showToast(model);
+            }
           }}
         />
       )}

@@ -143,7 +143,9 @@
 }
 
 .sidebar-logo {
-  display: inline-flex;
+  position: absolute;
+  right: 0;
+  bottom: 18px;
 }
 
 .sidebar-title-container {

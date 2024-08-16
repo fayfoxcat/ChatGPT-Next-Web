@@ -140,11 +140,6 @@ export function SideBarContainer(props: {
   );
 
   useHotKey();
-  const updateStore = useUpdateStore();
-  const usage = {
-    used: updateStore.used,
-    subscription: updateStore.subscription,
-  };
   const { children, className, onDragStart, shouldNarrow } = props;
   return (
     <div
@@ -173,6 +168,11 @@ export function SideBarHeader(props: {
   logo?: React.ReactNode;
   children?: React.ReactNode;
 }) {
+  const updateStore = useUpdateStore();
+  const usage = {
+    used: updateStore.used,
+    subscription: updateStore.subscription,
+  };
   const { title, subTitle, logo, children } = props;
   return (
     <Fragment>
@@ -189,8 +189,8 @@ export function SideBarHeader(props: {
               ((usage?.subscription ?? 0) - (usage?.used ?? 0)).toFixed(2),
             )}
           </div>
+          <div className={styles["sidebar-logo"] + " no-dark"}>{logo}</div>
         </div>
-        <div className={styles["sidebar-logo"] + " no-dark"}>{logo}</div>
       </div>
       {children}
     </Fragment>

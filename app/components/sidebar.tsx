@@ -167,16 +167,22 @@ export function SideBarHeader(props: {
   subTitle?: string | React.ReactNode;
   logo?: React.ReactNode;
   children?: React.ReactNode;
+  shouldNarrow?: boolean;
 }) {
   const updateStore = useUpdateStore();
   const usage = {
     used: updateStore.used,
     subscription: updateStore.subscription,
   };
-  const { title, subTitle, logo, children } = props;
+  const { title, subTitle, logo, children, shouldNarrow } = props;
   return (
     <Fragment>
-      <div className={styles["sidebar-header"]} data-tauri-drag-region>
+      <div
+        className={`${styles["sidebar-header"]} ${
+          shouldNarrow ? styles["sidebar-header-narrow"] : ""
+        }`}
+        data-tauri-drag-region
+      >
         <div className={styles["sidebar-title-container"]}>
           <div className={styles["sidebar-title"]} data-tauri-drag-region>
             {title}
@@ -241,6 +247,7 @@ export function SideBar(props: { className?: string }) {
         title="NextChat"
         subTitle="Build your own AI assistant."
         logo={<ChatGptIcon />}
+        shouldNarrow={shouldNarrow}
       >
         <div className={styles["sidebar-header-bar"]}>
           <IconButton
@@ -267,11 +274,6 @@ export function SideBar(props: { className?: string }) {
         {showPluginSelector && (
           <Selector
             items={[
-              {
-                title: "👇 Please select the plugin you need to use",
-                value: "-",
-                disable: true,
-              },
               ...PLUGINS.map((item) => {
                 return {
                   title: item.name,
